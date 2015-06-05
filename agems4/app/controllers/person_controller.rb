@@ -11,10 +11,13 @@ class PersonController < ApplicationController
   def new
     @forms = Form.all
     @person = Person.new
+    @array = Array.new
   end
 
   def create
-    @person = Person.new(person_params)
+     
+     @person_params = params.permit(:array_data, :status, :order)
+    @person = Person.new(@person_params)
       if @person.save
         redirect_to(person_index_path)
       else
@@ -47,7 +50,7 @@ class PersonController < ApplicationController
   private
 
   def person_params
-    person_params.require(:person).permit(:array_data, :status, :order)
+    person_params.(:person).permit(:array_data, :status, :order)
   end
 
 end
